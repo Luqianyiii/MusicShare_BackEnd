@@ -37,7 +37,7 @@ mybatis-plus:
 # ????????
 logging:
   # ??????
-  config: classpath:log/logback-spring.xml
+  config: target/classes/log/ logback-spring.xml
 
 # springdoc-openapi
 springdoc:
@@ -88,7 +88,7 @@ share:
     ccp:
       serverIp: app.cloopen.com
       port: 8883
-      accountSId: accountSId
-      accountToken: accountToken
-      appId: appId
+      accountSId: 2c94811c93863e4f01938abc945a00e2
+      accountToken: baf4abfb77874086aa54edb0cdc6986f
+      appId: 2c94811c93863e4f01938abc960e00e9
       templateId: 1
