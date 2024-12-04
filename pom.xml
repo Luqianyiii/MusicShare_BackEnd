@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.hahaha</groupId>
-	<artifactId>music-share</artifactId>
+	<groupId>top.ssy</groupId>
+	<artifactId>share-app-api</artifactId>
 	<version>${revision}</version>
-	<name>music-share</name>
-	<description>音乐分享网站api</description>
+	<name>share-app-api</name>
+	<description>资源分享应用api</description>
 
 	<properties>
 		<java.version>17</java.version>
