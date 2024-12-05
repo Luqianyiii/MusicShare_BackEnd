@@ -7,4 +7,6 @@ public interface Constant {
     String UPDATE_TIME = "updateTime";
     //   逻辑删除
     String DELETE_FLAG = "deleteFlag";
+    // ⽤户id
+    String USER_ID = "userId";
 }

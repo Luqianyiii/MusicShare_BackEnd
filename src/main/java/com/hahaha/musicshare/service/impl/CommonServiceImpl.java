@@ -1,4 +1,4 @@
-package com.hahaha.musicshare.service;
+package com.hahaha.musicshare.service.impl;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
@@ -11,6 +11,7 @@ import com.hahaha.musicshare.common.config.CloopenConfig;
 import com.hahaha.musicshare.common.config.OssConfig;
 import com.hahaha.musicshare.common.exception.ErrorCode;
 import com.hahaha.musicshare.common.exception.ServerException;
+import com.hahaha.musicshare.service.CommonService;
 import com.hahaha.musicshare.utils.CommonUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
