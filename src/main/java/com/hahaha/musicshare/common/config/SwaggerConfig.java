@@ -14,10 +14,10 @@ public class SwaggerConfig {
     public OpenAPI customOpenApi() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("资源分享应用 API")
+                        .title("音乐分享网站 API")
                         .contact(new Contact().name("ssy").email("ssy.@qq.com"))
                         .version("1.0")
-                        .description("资源分享应用 API 接口文档")
+                        .description("音乐分享网站 API 接口文档")
                         .license(new License().name("Apache 2.0").url("http://doc.xiaominfo.com")));
     }
 }

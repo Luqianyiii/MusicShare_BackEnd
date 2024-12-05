@@ -13,4 +13,19 @@ public interface AuthService extends IService<User> {
      * @return {@link UserLoginVO}
      */
     UserLoginVO loginByPhone(String phone, String code);
+
+
+    /**
+     * 登出
+     */
+    void logout();
+
+    /**
+     * 绑定⼿机号
+     *
+     * @param phone       电话
+     * @param code        验证码
+     * @param accessToken 访问令牌
+     */
+    void bindPhone(String phone, String code, String accessToken);
 }

@@ -17,7 +17,7 @@ public class TokenStoreCache {
 
     public void saveUser(String accessToken, UserLoginVO user) {
         String accessTokenKey = RedisKeys.getAccessTokenKey(accessToken);
-        String userIdKey = RedisKeys.getUserIdKey(user.getPkId());
+        String userIdKey = RedisKeys.getUserIdKey(user.getId());
         if (redisCache.get(userIdKey) != null) {
             redisCache.delete(String.valueOf(redisCache.get(userIdKey)));
         }
