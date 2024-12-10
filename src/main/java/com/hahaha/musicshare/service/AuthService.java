@@ -22,21 +22,5 @@ public interface AuthService extends IService<User> {
      */
     void logout();
 
-    /**
-     * 绑定⼿机号
-     *
-     * @param phone       电话
-     * @param code        验证码
-     * @param accessToken 访问令牌
-     */
-    void bindPhone(String phone, String code, String accessToken);
-
-    /**
-     * 上传⽂件
-     *
-     * @param file ⽂件
-     * @return ⽂件路径
-     */
-
 
 }

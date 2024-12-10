@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @TableName("personal_information")
-public class User {
+public class  User {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     private String phone;
