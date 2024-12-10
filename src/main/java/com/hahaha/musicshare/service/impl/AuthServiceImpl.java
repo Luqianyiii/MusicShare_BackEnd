@@ -27,7 +27,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
     private final TokenStoreCache tokenStoreCache;
 
     @Override
-    public UserLoginVO loginByPhone(String phone, String code) {
+    public UserLoginVO loginByCode(String phone, String code) {
         // 获取验证码cacheKey
         String smsCacheKey = RedisKeys.getSmsKey(phone);
         // 从redis中获取验证码
@@ -50,6 +50,10 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
             user.setRemark("user");
             baseMapper.insert(user);
         }
+        return getUserLoginVO(user);
+    }
+
+    private UserLoginVO getUserLoginVO(User user) {
         // 构造token
         String accessToken = JwtUtil.createToken(user.getId());
         // 构造登陆返回vo
@@ -61,6 +65,21 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
         tokenStoreCache.saveUser(accessToken, userLoginVO);
         return userLoginVO;
     }
+
+    @Override
+    public UserLoginVO loginByPassword(String phone, String password) {
+        // 根据⼿机号获取⽤户
+        User user = baseMapper.getByPhone(phone);
+        // 判断⽤户是否存在
+        if (ObjectUtils.isEmpty(user)) {
+            throw new ServerException(ErrorCode.USER_NOT_EXIST);
+        } else if (!user.getPassword().equals(password)) {
+            throw new ServerException(ErrorCode.PASSWORD_ERROR);
+        }
+        // 构造token
+        return getUserLoginVO(user);
+    }
+
 
     @Override
     public void logout() {

@@ -1,5 +1,6 @@
 package com.hahaha.musicshare.common.cache;
 
+//处理传入字段，自定义Redis缓存存储规范
 public class RedisKeys {
     /**
      * 验证码Key

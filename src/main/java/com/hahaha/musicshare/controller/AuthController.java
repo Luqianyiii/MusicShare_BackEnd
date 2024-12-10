@@ -15,10 +15,16 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/login")
-    @Operation(summary = "⼿机号登录")
-    public Result<UserLoginVO> loginByPhone(@RequestParam("phone") String phone, @RequestParam("code") String code) {
-        return Result.ok(authService.loginByPhone(phone, code));
+    @PostMapping("/login_by_code")
+    @Operation(summary = "验证码登录")
+    public Result<UserLoginVO> loginByCode(@RequestParam("phone") String phone, @RequestParam("code") String code) {
+        return Result.ok(authService.loginByCode(phone, code));
+    }
+
+    @PostMapping("/login_by_password")
+    @Operation(summary = "密码登录")
+    public Result<UserLoginVO> loginByPassWord(@RequestParam("phone") String phone, @RequestParam("password") String password) {
+        return Result.ok(authService.loginByPassword(phone, password));
     }
 
     @PostMapping("/logout")

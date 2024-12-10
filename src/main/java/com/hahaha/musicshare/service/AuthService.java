@@ -12,7 +12,9 @@ public interface AuthService extends IService<User> {
      * @param code  验证码
      * @return {@link UserLoginVO}
      */
-    UserLoginVO loginByPhone(String phone, String code);
+    UserLoginVO loginByCode(String phone, String code);
+
+    UserLoginVO loginByPassword(String phone,String password);
 
 
     /**

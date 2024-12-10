@@ -16,7 +16,8 @@ public enum ErrorCode {
     SMS_CODE_ERROR(3004, "短信验证码错误"),
     USER_NOT_EXIST( 3006, "⽤户不存在"),
     PHONE_IS_EXIST(3007, "⼿机号已被他⼈绑定"),
-    THE_SAME_PHONE(3008, "该⼿机号和当前绑定⼿机号相同");
+    THE_SAME_PHONE(3008, "该⼿机号和当前绑定⼿机号相同"),
+    PASSWORD_ERROR(3005,"密码错误");
     private final int code;
     private final String msg;
 }
