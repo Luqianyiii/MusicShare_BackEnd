@@ -56,6 +56,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
         userLoginVO.setId(user.getId());
         userLoginVO.setPhone(user.getPhone());
         userLoginVO.setAccessToken(accessToken);
+        userLoginVO.setRemark(userLoginVO.getRemark());
         tokenStoreCache.saveUser(accessToken, userLoginVO);
         return userLoginVO;
     }

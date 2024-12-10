@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Component
+//管理Redis数据缓存
 public class RedisCache {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;

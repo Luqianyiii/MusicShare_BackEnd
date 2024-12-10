@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-@Component
+//@Component
+//对数据库插入和更新时自动调用
 public class FieldMetaObjectHandler implements MetaObjectHandler {
 
     @Override
