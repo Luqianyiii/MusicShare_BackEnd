@@ -5,7 +5,9 @@ import com.hahaha.musicshare.common.constant.Constant;
 import java.util.HashMap;
 import java.util.Map;
 
+//请求的上下文环境，将需要全局存储的变量可以放在本类管理
 public class RequestContext {
+//    使用ThreadLocal<Map<Object, Object>>通过get()方法只获得当前线程map对象的键值对，实现线程安全
     private static final ThreadLocal<Map<Object, Object>> RESOURCES = new InheritableThreadLocalMap<>();
 
     public static void put(Object key, Object value) {

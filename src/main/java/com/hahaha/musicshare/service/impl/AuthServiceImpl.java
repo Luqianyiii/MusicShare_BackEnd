@@ -47,6 +47,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
             user = new User();
             user.setNickname(phone);
             user.setPhone(phone);
+            user.setRemark("user");
             baseMapper.insert(user);
         }
         // 构造token
@@ -56,6 +57,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
         userLoginVO.setId(user.getId());
         userLoginVO.setPhone(user.getPhone());
         userLoginVO.setAccessToken(accessToken);
+        userLoginVO.setRemark(user.getRemark());
         tokenStoreCache.saveUser(accessToken, userLoginVO);
         return userLoginVO;
     }
