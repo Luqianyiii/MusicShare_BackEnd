@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+//TODO 拦截路径尚未配置
 @Component
 public class PermitResource {
     /**

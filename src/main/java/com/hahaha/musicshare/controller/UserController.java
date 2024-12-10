@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -30,5 +31,11 @@ public class UserController {
     @Operation(summary = "修改⽤户信息")
     public Result<UserInfoVO> update(@RequestBody UserEditDTO userEditDTO){
         return Result.ok(userService.updateInfo(userEditDTO));
+    }
+
+    @PostMapping(value = "/upload/avatar")
+    @Operation(summary = "头像上传")
+    public Result<String> upload(@org.springframework.web.bind.annotation.RequestBody MultipartFile file) {
+        return Result.ok(userService.uploadAvatar(file));
     }
 }

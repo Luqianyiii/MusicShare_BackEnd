@@ -19,12 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
+
 @Slf4j
 @Service
 @AllArgsConstructor
 public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements AuthService {
     private final RedisCache redisCache;
     private final TokenStoreCache tokenStoreCache;
+
 
     @Override
     public UserLoginVO loginByCode(String phone, String code) {
@@ -129,4 +131,5 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
             throw new ServerException(ErrorCode.OPERATION_FAIL);
         }
     }
+
 }

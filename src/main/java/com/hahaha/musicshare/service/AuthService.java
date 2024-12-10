@@ -30,4 +30,13 @@ public interface AuthService extends IService<User> {
      * @param accessToken 访问令牌
      */
     void bindPhone(String phone, String code, String accessToken);
+
+    /**
+     * 上传⽂件
+     *
+     * @param file ⽂件
+     * @return ⽂件路径
+     */
+
+
 }

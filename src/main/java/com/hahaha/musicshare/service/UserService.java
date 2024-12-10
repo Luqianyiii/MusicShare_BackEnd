@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hahaha.musicshare.model.dto.UserEditDTO;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService extends IService<User> {
     /**
@@ -19,4 +20,6 @@ public interface UserService extends IService<User> {
      * @return UserInfoVO
      */
     UserInfoVO updateInfo(UserEditDTO userEditDTO);
+
+    String uploadAvatar(MultipartFile file);
 }

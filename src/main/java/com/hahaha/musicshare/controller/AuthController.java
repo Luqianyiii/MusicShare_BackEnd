@@ -45,4 +45,5 @@ public class AuthController {
         authService.bindPhone(phone, code, accessToken);
         return Result.ok();
     }
+
 }
