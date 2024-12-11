@@ -1,6 +1,7 @@
 package com.hahaha.musicshare.common.config;
 
 import com.hahaha.musicshare.common.interceptor.PermitResource;
+import com.hahaha.musicshare.common.interceptor.RoleInterceptor;
 import com.hahaha.musicshare.common.interceptor.TokenInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SpringMvcConfig implements WebMvcConfigurer {
     private final TokenInterceptor tokenInterceptor;
     private final PermitResource permitResource;
+    private final RoleInterceptor roleInterceptor;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -34,6 +36,9 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tokenInterceptor)
                 // 添加需要被校验的路径
-                .addPathPatterns(permitResource.getValidList());
+                .addPathPatterns(permitResource.getValidList(0));
+        registry.addInterceptor(roleInterceptor)
+                // 添加需要被校验的路径 TODO
+                .addPathPatterns(permitResource.getValidList(""));
     }
 }

@@ -20,7 +20,14 @@ public class PermitResource {
      * 指定被 过滤器 检查的URL
      */
     @SneakyThrows
-    public List<String> getValidList() {
+    public List<String> getValidList(int a) {
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath*:application.yml");
+        String key = "auth.login_urls";
+        return getPropertiesList(key, resources);
+    }
+    @SneakyThrows
+    public List<String> getValidList(String a) {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath*:application.yml");
         String key = "auth.valid_urls";

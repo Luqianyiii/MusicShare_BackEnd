@@ -28,6 +28,13 @@ public class RequestContext {
         }
         return Integer.valueOf(String.valueOf(result));
     }
+    public static String getUserRole() {
+        Object result = get(Constant.USER_ROLE);
+        if (result == null) {
+            throw new IllegalArgumentException("user role cannot be null");
+        }
+        return String.valueOf(result);
+    }
 
     private static Object get(Object key) {
         if (key == null) {

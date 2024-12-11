@@ -41,6 +41,8 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         // 保存⽤户id到上下⽂
         RequestContext.put(Constant.USER_ID, user.getId());
+//        保存角色信息到上下文
+        RequestContext.put(Constant.USER_ROLE, user.getRemark());
         return true;
     }
 }
