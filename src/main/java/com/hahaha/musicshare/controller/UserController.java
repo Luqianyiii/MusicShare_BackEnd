@@ -5,7 +5,7 @@ import com.hahaha.musicshare.model.dto.UserEditDTO;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
 import com.hahaha.musicshare.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("update")
+    @PostMapping("/update")
     @Operation(summary = "修改⽤户信息")
     public Result<UserInfoVO> update(@RequestBody UserEditDTO userEditDTO){
         return Result.ok(userService.updateInfo(userEditDTO));
@@ -30,7 +30,7 @@ public class UserController {
 
     @PostMapping(value = "/upload/avatar")
     @Operation(summary = "头像上传")
-    public Result<String> upload(@org.springframework.web.bind.annotation.RequestBody MultipartFile file) {
+    public Result<String> upload(@RequestBody MultipartFile file) {
         return Result.ok(userService.uploadAvatar(file));
     }
 }
