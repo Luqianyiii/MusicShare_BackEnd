@@ -5,13 +5,10 @@ import com.hahaha.musicshare.model.dto.UserEditDTO;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
 import com.hahaha.musicshare.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -21,6 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "⽤户接⼝")
 public class UserController {
     private final UserService userService;
+
+    @PostMapping("/info")
+    @Operation(summary = "获取⽤户信息")
+    public Result<UserInfoVO> getInfo(){
+        return Result.ok(userService.userInfo());
+    }
 
     @PostMapping("/update")
     @Operation(summary = "修改⽤户信息")
@@ -32,5 +35,13 @@ public class UserController {
     @Operation(summary = "头像上传")
     public Result<String> upload(@RequestBody MultipartFile file) {
         return Result.ok(userService.uploadAvatar(file));
+    }
+
+    @PostMapping(value = "/changePassword")
+    @Operation(summary = "更改密码")
+    public Result<String> changePassword(@RequestParam("phone") String phone,
+                                         @RequestParam("code") String code,
+                                         @RequestParam("password") String password) {
+        return Result.ok(userService.updatePassword(phone, code,password));
     }
 }

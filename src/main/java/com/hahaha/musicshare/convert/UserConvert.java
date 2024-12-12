@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface UserConvert {
+
     //获取 UserConvert 实例，由 MapStruct ⾃动⽣成实现类并提供实例
     UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
 

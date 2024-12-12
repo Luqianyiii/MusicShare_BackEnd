@@ -8,4 +8,5 @@ public interface CommentMapper extends BaseMapper<Comment> {
     default Comment getById(Integer id) {
         return this.selectOne(new LambdaQueryWrapper<Comment>().eq(Comment::getId, id));
     }
+//    TODO 复杂条件查询评论
 }

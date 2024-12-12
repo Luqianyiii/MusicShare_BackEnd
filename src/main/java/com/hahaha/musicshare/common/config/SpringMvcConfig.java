@@ -38,7 +38,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                 // 添加需要被校验的路径
                 .addPathPatterns(permitResource.getValidList(0));
         registry.addInterceptor(roleInterceptor)
-                // 添加需要被校验的路径 TODO
+                // 添加需要被校验的路径
                 .addPathPatterns(permitResource.getValidList(""));
     }
 }

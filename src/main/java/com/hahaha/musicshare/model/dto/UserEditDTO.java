@@ -4,13 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(description = "⽤户修改dto")
+@Schema(description = "修改个人信息")
 public class UserEditDTO {
-    @Schema(description = "主键")
-    private Integer Id;
 
-    @Schema(description = "头像")
-    private String avatar;
+    @Schema(description = "主键")
+    private Integer id;
 
     @Schema(description = "昵称")
     private String nickname;

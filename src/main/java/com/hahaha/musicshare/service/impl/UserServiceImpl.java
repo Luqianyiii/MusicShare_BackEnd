@@ -126,4 +126,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         baseMapper.updateById(user);
         return returnImgUrl;
     }
+
+    @Override
+    public String updatePassword(String phone, String code, String password) {
+//        TODO 部分业务逻辑待实现
+        return "ok";
+    }
 }

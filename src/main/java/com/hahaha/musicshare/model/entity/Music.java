@@ -12,6 +12,7 @@ public class Music {
     private Integer id;
     private String song_name;
     private Integer author_id;
+    private String author_name;
     private String description;
     private String link;
     private String cover;
