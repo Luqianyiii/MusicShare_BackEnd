@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @TableName("notifications")
-public class notification {
+public class Notification {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     private Integer recipient_id;
