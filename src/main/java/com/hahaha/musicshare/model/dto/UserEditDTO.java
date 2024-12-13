@@ -14,7 +14,7 @@ public class UserEditDTO {
     private String nickname;
 
     @Schema(description = "性别")
-    private Integer gender;
+    private String gender;
 
     @Schema(description = "个性签名")
     private String motto;
