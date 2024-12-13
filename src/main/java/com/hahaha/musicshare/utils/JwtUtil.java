@@ -69,10 +69,4 @@ public class JwtUtil {
         }
         return accessToken;
     }
-    // public static void main(String[] args) {
-    // String token = createToken(10001L);
-    // System.out.println(token);
-    // validate(token);
-    // getJSONObject(token);
-    // }
 }

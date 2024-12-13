@@ -31,7 +31,6 @@ public class ServerExceptionHandler {
      * @param exception 异常
      * @return Result<String>
      */
-//    TODO 存在类型接收转换问题，自行解决报错后，需要验证
     @ExceptionHandler(BindException.class)
     public Result<String> bindException(BindException exception) {
         exception.getProperty();

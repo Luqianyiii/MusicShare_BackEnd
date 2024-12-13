@@ -6,8 +6,6 @@ import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 public interface UserService extends IService<User> {
 
      /**
@@ -26,13 +24,5 @@ public interface UserService extends IService<User> {
 
     UserInfoVO updateInfo(UserEditDTO userEditDTO);
 
-    /**
-     * 上传头像
-     *
-     * @param file ⽂件
-     * @return {@link String}
-     */
-    String uploadAvatar(MultipartFile file);
 
-    String updatePassword(String phone,String code,String password);
 }

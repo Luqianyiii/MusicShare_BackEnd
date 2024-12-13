@@ -1,5 +1,7 @@
 package com.hahaha.musicshare.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface CommunicationService {
     /**
      * 发送短信
@@ -18,4 +20,14 @@ public interface CommunicationService {
      */
 
     void bindPhone(String phone, String code, String accessToken);
+
+    /**
+     * 上传头像
+     *
+     * @param file ⽂件
+     * @return {@link String}
+     */
+    String uploadAvatar(MultipartFile file);
+
+    String updatePassword(String phone,String code,String password,String accessToken);
 }

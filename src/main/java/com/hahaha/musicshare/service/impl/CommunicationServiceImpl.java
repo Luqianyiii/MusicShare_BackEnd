@@ -1,12 +1,17 @@
 package com.hahaha.musicshare.service.impl;
 
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloopen.rest.sdk.BodyType;
 import com.cloopen.rest.sdk.CCPRestSmsSDK;
 import com.hahaha.musicshare.common.cache.RedisCache;
 import com.hahaha.musicshare.common.cache.RedisKeys;
+import com.hahaha.musicshare.common.cache.RequestContext;
 import com.hahaha.musicshare.common.cache.TokenStoreCache;
 import com.hahaha.musicshare.common.config.CloopenConfig;
+import com.hahaha.musicshare.common.config.OssConfig;
 import com.hahaha.musicshare.common.exception.ErrorCode;
 import com.hahaha.musicshare.common.exception.ServerException;
 import com.hahaha.musicshare.mapper.UserMapper;
@@ -17,8 +22,14 @@ import com.hahaha.musicshare.utils.CommonUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
@@ -30,7 +41,10 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
     private final CloopenConfig cloopenConfig;
     private final RedisCache redisCache;
     private final TokenStoreCache tokenStoreCache;
-
+    private final OssConfig ossConfig;
+    // 允许上传⽂件(图⽚)的格式
+    static final String[] IMAGE_TYPE = new String[]{".bmp", ".jpg"
+            , ".jpeg", ".gif", ".png"};
 
     @Override
     public void sendSms(String phone) {
@@ -60,20 +74,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
     private boolean cloopenSendSms(String phone, int code) {
         try {
             log.info(" ============= 创建短信发送通道中 ============= \nphone is {},code is {}", phone, code);
-            String serverIp = cloopenConfig.getServerIp();
-            // 请求端⼝
-            String serverPort = cloopenConfig.getPort();
-            // 主账号,登陆云通讯⽹站后,可在控制台⾸⻚看到开发者主账号ACCOUNT SID和主账号令牌AUTH TOKEN
-
-            String accountSId = cloopenConfig.getAccountSId();
-            String accountToken = cloopenConfig.getAccountToken();
-            // 请使⽤管理控制台中已创建应⽤的APPID
-            String appId = cloopenConfig.getAppId();
-            CCPRestSmsSDK sdk = new CCPRestSmsSDK();
-            sdk.init(serverIp, serverPort);
-            sdk.setAccount(accountSId, accountToken);
-            sdk.setAppId(appId);
-            sdk.setBodyType(BodyType.Type_JSON);
+            CCPRestSmsSDK sdk = getSmsSDK();
             String templateId = cloopenConfig.getTemplateId();
             String[] datas = {String.valueOf(code), "1"};
             HashMap<String, Object> result = sdk.sendTemplateSMS(phone, templateId, datas, "1234", UUID.randomUUID().toString());
@@ -97,9 +98,111 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
         return true;
     }
 
+    private CCPRestSmsSDK getSmsSDK() {
+        String serverIp = cloopenConfig.getServerIp();
+        // 请求端⼝
+        String serverPort = cloopenConfig.getPort();
+        // 主账号,登陆云通讯⽹站后,可在控制台⾸⻚看到开发者主账号ACCOUNT SID和主账号令牌AUTH TOKEN
+
+        String accountSId = cloopenConfig.getAccountSId();
+        String accountToken = cloopenConfig.getAccountToken();
+        // 请使⽤管理控制台中已创建应⽤的APPID
+        String appId = cloopenConfig.getAppId();
+        CCPRestSmsSDK sdk = new CCPRestSmsSDK();
+        sdk.init(serverIp, serverPort);
+        sdk.setAccount(accountSId, accountToken);
+        sdk.setAppId(appId);
+        sdk.setBodyType(BodyType.Type_JSON);
+        return sdk;
+    }
+
 
     @Override
     public void bindPhone(String phone, String code, String accessToken) {
+        UserLoginVO userLogin = validateUpdate(phone, code, accessToken);
+        // 重新设置⼿机号
+        User user = baseMapper.selectById(userLogin.getId());
+        user.setPhone(phone);
+        if (baseMapper.updateById(user) < 1) {
+            throw new ServerException(ErrorCode.OPERATION_FAIL);
+        }
+    }
+
+    @Override
+    public String uploadAvatar(MultipartFile file) {
+        String returnImgUrl;
+        // 校验图⽚格式
+        boolean isLegal = false;
+        for (String type : IMAGE_TYPE) {
+            if (StringUtils.endsWithIgnoreCase(file.getOriginalFilename(),
+                    type)) {
+                isLegal = true;
+                break;
+            }
+        }
+        if (!isLegal) {
+            // 如果图⽚格式不合法
+            throw new ServerException("图⽚格式不正确");
+        }
+        // 获取⽂件原名称
+        String originalFilename = file.getOriginalFilename();
+        // 获取⽂件类型
+        assert originalFilename != null;
+        String fileType = originalFilename.substring(originalFilename.lastIndexOf("."));
+        // 新⽂件名称
+        String newFileName = UUID.randomUUID() + fileType;
+        // 构建⽇期路径, 例如：OSS⽬标⽂件夹/2024/04/31/⽂件名
+        String filePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+        // ⽂件上传的路径地址
+        String uploadUrl = filePath + "/" + newFileName;
+        // 获取⽂件输⼊流
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*
+         * 现在阿⾥云OSS 默认图⽚上传ContentType是image/jpeg
+         * 也就是说，获取图⽚链接后，图⽚是下载链接，⽽并⾮在线浏览链接，
+         * 因此，这⾥在上传的时候要解决ContentType的问题，将其改为image/jpg
+         */
+        ObjectMetadata meta = new ObjectMetadata();
+        meta.setContentType("image/jpg");
+        //读取配置⽂件中的属性
+        String endpoint = ossConfig.getEndpoint();
+        String accessKeyId = ossConfig.getAccessKeyId();
+        String accessKeySecret = ossConfig.getAccessKeySecret();
+        String bucketName = ossConfig.getBucketName();
+        // 创建 OssClient
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId
+                , accessKeySecret);
+        //⽂件上传⾄阿⾥云OSS
+        ossClient.putObject(bucketName, uploadUrl, inputStream, meta);
+        // 获取⽂件上传后的图⽚返回地址
+        returnImgUrl = "https://" + bucketName + "." + endpoint + "/" + uploadUrl;
+        Integer userId = RequestContext.getUserId();
+        //将用户头像更新到数据库
+        User user = new User();
+        user.setId(userId);
+        user.setAvatar(returnImgUrl);
+        baseMapper.updateById(user);
+        return returnImgUrl;
+    }
+
+    @Override
+    public String updatePassword(String phone, String code, String password,String accessToken) {
+        UserLoginVO userInfo = validateUpdate(phone,code, accessToken);
+        // 更新密码
+        User user = baseMapper.selectById(userInfo.getId());
+        user.setPassword(password);
+        if (baseMapper.updateById(user) < 1) {
+            throw new ServerException(ErrorCode.OPERATION_FAIL);
+        }
+        return "ok";
+    }
+
+    private UserLoginVO validateUpdate(String phone, String code, String accessToken) {
         // 简单校验⼿机号合法性
         if (!CommonUtils.checkPhone(phone)) {
             throw new ServerException(ErrorCode.PARAMS_ERROR);
@@ -127,11 +230,6 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
                 throw new ServerException(ErrorCode.THE_SAME_PHONE);
             }
         }
-        // 重新设置⼿机号
-        User user = baseMapper.selectById(userLogin.getId());
-        user.setPhone(phone);
-        if (baseMapper.updateById(user) < 1) {
-            throw new ServerException(ErrorCode.OPERATION_FAIL);
-        }
+        return userLogin;
     }
 }
