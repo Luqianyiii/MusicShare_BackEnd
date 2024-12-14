@@ -15,7 +15,7 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
     }
 
     @Override
-    public void deleteFavorites(Integer user_id, Integer music_id) {
+    public void deleteFavorites(Integer id) {
 
     }
 

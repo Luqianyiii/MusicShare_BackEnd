@@ -16,6 +16,9 @@ public interface FanService extends IService<Fan> {
 
     //获取粉丝
     List<FanVO> getFans(Integer user_id);
+    
+    //获取关注
+    List<FanVO> getFollowed(Integer user_id);
 
 
 }

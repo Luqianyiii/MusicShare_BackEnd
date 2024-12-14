@@ -25,7 +25,10 @@ public class CommentVO implements Serializable {
     private Integer commenter_id;
 
     @Schema(description = "评论者昵称")
-    private String commenter_nickname;
+    private String comment_nickname;
+
+    @Schema(description = "评论者头像")
+    private String comment_avatar;
 
     @Schema(description = "评论对象类型")
     private String comment_object_type;

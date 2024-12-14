@@ -12,7 +12,7 @@ public interface FavoritesService extends IService<Favorites> {
     void addFavorites(Integer user_id, Integer music_id);
 
     //删除收藏
-    void deleteFavorites(Integer user_id, Integer music_id);
+    void deleteFavorites(Integer id);
 
     //获取收藏列表
     List<FavoritesVO> getFavorites(Integer user_id);

@@ -13,4 +13,9 @@ public class NotificationServiceImpl extends ServiceImpl<NotificationMapper, Not
     public List<NotificationVO> getNotificationByUserId(Integer user_id) {
         return List.of();
     }
+
+    @Override
+    public void deleteNotificationById(Integer notification_id) {
+
+    }
 }

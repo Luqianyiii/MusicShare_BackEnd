@@ -23,5 +23,10 @@ public class FanServiceImpl extends ServiceImpl<FanMapper, Fan> implements FanSe
     public List<FanVO> getFans(Integer user_id) {
         return List.of();
     }
+
+    @Override
+    public List<FanVO> getFollowed(Integer user_id) {
+        return List.of();
+    }
 }
 

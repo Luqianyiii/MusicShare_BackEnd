@@ -29,5 +29,14 @@ public interface CommunicationService {
      */
     String uploadAvatar(MultipartFile file);
 
-    String updatePassword(String phone,String code,String password,String accessToken);
+    /**
+     * 修改密码
+     *
+     * @param phone       手机号
+     * @param code        验证码
+     * @param password    密码
+     * @param accessToken accessToken
+     */
+
+    void updatePassword(String phone, String code, String password, String accessToken);
 }

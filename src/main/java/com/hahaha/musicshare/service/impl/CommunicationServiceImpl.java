@@ -191,7 +191,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
     }
 
     @Override
-    public String updatePassword(String phone, String code, String password,String accessToken) {
+    public void updatePassword(String phone, String code, String password, String accessToken) {
         UserLoginVO userInfo = validateUpdate(phone,code, accessToken);
         // 更新密码
         User user = baseMapper.selectById(userInfo.getId());
@@ -199,7 +199,6 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
         if (baseMapper.updateById(user) < 1) {
             throw new ServerException(ErrorCode.OPERATION_FAIL);
         }
-        return "ok";
     }
 
     private UserLoginVO validateUpdate(String phone, String code, String accessToken) {

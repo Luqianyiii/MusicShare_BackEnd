@@ -3,14 +3,13 @@ package com.hahaha.musicshare.controller;
 import com.hahaha.musicshare.common.result.Result;
 import com.hahaha.musicshare.model.dto.UserEditDTO;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
-import com.hahaha.musicshare.service.CommentService;
 import com.hahaha.musicshare.service.CommunicationService;
 import com.hahaha.musicshare.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -46,6 +45,7 @@ public class UserController {
                                          @RequestParam("code") String code,
                                          @RequestParam("password") String password,
                                          @RequestHeader("Authorization") String accessToken) {
-        return Result.ok(communicationService.updatePassword(phone, code,password,accessToken));
+        communicationService.updatePassword(phone, code, password, accessToken);
+        return Result.ok();
     }
 }
