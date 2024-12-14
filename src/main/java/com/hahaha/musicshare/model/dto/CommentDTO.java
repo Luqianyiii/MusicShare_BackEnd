@@ -22,9 +22,9 @@ public class CommentDTO {
     @Schema(description = "评论者头像")
     private String comment_avatar;
 
-    @Schema(description = "评论对象类型")
-    private String comment_object_type;
+    @Schema(description = "评论作品ID")
+    private Integer comment_music_id;
 
-    @Schema(description = "评论对象ID")
-    private Integer comment_object_id;
+    @Schema(description = "评论接收对象")
+    private Integer recipient_id;
 }

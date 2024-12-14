@@ -20,4 +20,7 @@ public interface CommentConvert {
 
     //将 Comment 对象转换为 CommentVO 对象
     CommentVO convert(Comment comment);
+
+    //将 CommentDTO 对象转换为 CommentVO 对象
+    CommentVO convertTOVO(CommentDTO commentDTO);
 }

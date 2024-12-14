@@ -3,6 +3,7 @@ package com.hahaha.musicshare.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
@@ -13,6 +14,6 @@ public class Comment {
     private Integer likes_count;
     private String content;
     private Integer commenter_id;
-    private String comment_object_type;
-    private Integer comment_object_id;
+    private Integer comment_music_id;
+    private Integer recipient_id;
 }
