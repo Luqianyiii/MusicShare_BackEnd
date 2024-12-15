@@ -18,6 +18,7 @@ import com.hahaha.musicshare.mapper.UserMapper;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.UserLoginVO;
 import com.hahaha.musicshare.service.CommunicationService;
+import com.hahaha.musicshare.service.UserService;
 import com.hahaha.musicshare.utils.CommonUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -120,6 +121,17 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
     @Override
     public void bindPhone(String phone, String code, String accessToken) {
         UserLoginVO userLogin = validateUpdate(phone, code, accessToken);
+        // 判断新⼿机号是否存在⽤户
+        if (ObjectUtils.isNotEmpty(phone)) {
+            // 存在⽤户，并且不是当前⽤户，抛出异常
+            if (!userLogin.getId().equals(baseMapper.getByPhone(phone).getId())) {
+                throw new ServerException(ErrorCode.PHONE_IS_EXIST);
+            }
+            // 存在⽤户，并且是当前⽤户，提示⽤户⼿机号相同
+            if (userLogin.getPhone().equals(phone)) {
+                throw new ServerException(ErrorCode.THE_SAME_PHONE);
+            }
+        }
         // 重新设置⼿机号
         User user = baseMapper.selectById(userLogin.getId());
         user.setPhone(phone);
@@ -217,18 +229,6 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
         // 获取当前⽤户信息
         User userByPhone = baseMapper.getByPhone(phone);
         // 获取当前登录的⽤户信息
-        UserLoginVO userLogin = tokenStoreCache.getUser(accessToken);
-        // 判断新⼿机号是否存在⽤户
-        if (ObjectUtils.isNotEmpty(userByPhone)) {
-            // 存在⽤户，并且不是当前⽤户，抛出异常
-            if (!userLogin.getId().equals(userByPhone.getId())) {
-                throw new ServerException(ErrorCode.PHONE_IS_EXIST);
-            }
-            // 存在⽤户，并且是当前⽤户，提示⽤户⼿机号相同
-            if (userLogin.getPhone().equals(phone)) {
-                throw new ServerException(ErrorCode.THE_SAME_PHONE);
-            }
-        }
-        return userLogin;
+        return tokenStoreCache.getUser(accessToken);
     }
 }
