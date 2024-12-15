@@ -36,9 +36,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (!JwtUtil.validate(accessToken)) {
             throw new ServerException(ErrorCode.UNAUTHORIZED);
         }
-
         UserLoginVO user = tokenStoreCache.getUser(accessToken);
-
         // 保存⽤户id到上下⽂
         RequestContext.put(Constant.USER_ID, user.getId());
 //        保存角色信息到上下文

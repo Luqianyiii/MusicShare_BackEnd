@@ -2,7 +2,9 @@ package com.hahaha.musicshare.controller;
 
 import com.hahaha.musicshare.common.result.Result;
 import com.hahaha.musicshare.model.dto.UserEditDTO;
+import com.hahaha.musicshare.model.vo.CommentVO;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
+import com.hahaha.musicshare.service.CommentService;
 import com.hahaha.musicshare.service.CommunicationService;
 import com.hahaha.musicshare.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -20,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     private final UserService userService;
     private final CommunicationService communicationService;
+    private final CommentService commentService;
 
     @PostMapping("/info")
     @Operation(summary = "获取⽤户信息")
@@ -47,5 +52,11 @@ public class UserController {
                                          @RequestHeader("Authorization") String accessToken) {
         communicationService.updatePassword(phone, code, password, accessToken);
         return Result.ok();
+    }
+
+    @PostMapping(value = "/Comment")
+    @Operation(summary = "获取通知")
+    public Result<List<CommentVO>> getComment(@RequestParam("phone") Integer id) {
+        return Result.ok(commentService.getCommentByUserId(id));
     }
 }

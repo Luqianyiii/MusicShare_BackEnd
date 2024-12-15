@@ -7,9 +7,14 @@ import com.hahaha.musicshare.model.dto.CommentDTO;
 import com.hahaha.musicshare.model.entity.Comment;
 import com.hahaha.musicshare.model.vo.CommentVO;
 import com.hahaha.musicshare.service.CommentService;
-
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Slf4j
+@Service
+@AllArgsConstructor
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Override
     public CommentVO addComment(CommentDTO commentDTO) {
