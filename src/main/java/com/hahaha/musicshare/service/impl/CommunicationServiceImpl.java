@@ -119,7 +119,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
 
 
     @Override
-    public void bindPhone(String phone, String code, String accessToken) {
+    public String bindPhone(String phone, String code, String accessToken) {
         UserLoginVO userLogin = validateUpdate(phone, code, accessToken);
         // 判断新⼿机号是否存在⽤户
         if (ObjectUtils.isNotEmpty(baseMapper.getByPhone(phone))) {
@@ -138,6 +138,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
         if (baseMapper.updateById(user) < 1) {
             throw new ServerException(ErrorCode.OPERATION_FAIL);
         }
+        return accessToken;
     }
 
     @Override
@@ -203,7 +204,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
     }
 
     @Override
-    public void updatePassword(String phone, String code, String password, String accessToken) {
+    public String updatePassword(String phone, String code, String password, String accessToken) {
         UserLoginVO userInfo = validateUpdate(phone,code, accessToken);
         // 更新密码
         User user = baseMapper.selectById(userInfo.getId());
@@ -211,6 +212,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
         if (baseMapper.updateById(user) < 1) {
             throw new ServerException(ErrorCode.OPERATION_FAIL);
         }
+        return accessToken;
     }
 
     private UserLoginVO validateUpdate(String phone, String code, String accessToken) {

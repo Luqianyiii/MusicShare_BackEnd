@@ -16,7 +16,7 @@ public interface CommentService extends IService<Comment> {
     void deleteComment(Integer comment_id);
 
     //根据用户id查询评论
-    List<CommentVO> getCommentByUserId(Integer user_id);
+    List<CommentVO> getCommentByUserId();
 
     //根据歌曲id查询评论
     List<CommentVO> getCommentByMusicId(Integer music_id);

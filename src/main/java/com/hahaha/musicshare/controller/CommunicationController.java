@@ -31,8 +31,7 @@ public class CommunicationController {
             @RequestParam("code") String code,
             @RequestHeader("Authorization") String accessToken)
     {
-        communicationService.bindPhone(phone, code, accessToken);
-        return Result.ok();
+        return Result.ok(communicationService.bindPhone(phone, code, accessToken));
     }
 
 }

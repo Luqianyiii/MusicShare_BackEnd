@@ -50,13 +50,12 @@ public class UserController {
                                          @RequestParam("code") String code,
                                          @RequestParam("password") String password,
                                          @RequestHeader("Authorization") String accessToken) {
-        communicationService.updatePassword(phone, code, password, accessToken);
-        return Result.ok();
+        return Result.ok(communicationService.updatePassword(phone, code, password, accessToken));
     }
 
     @PostMapping(value = "/Comment")
     @Operation(summary = "获取通知")
-    public Result<List<CommentVO>> getComment(@RequestParam("phone") Integer id) {
-        return Result.ok(commentService.getCommentByUserId(id));
+    public Result<List<CommentVO>> getComment() {
+        return Result.ok(commentService.getCommentByUserId());
     }
 }

@@ -19,7 +19,7 @@ public interface CommunicationService {
      * @param accessToken accessToken
      */
 
-    void bindPhone(String phone, String code, String accessToken);
+    String bindPhone(String phone, String code, String accessToken);
 
     /**
      * 上传头像
@@ -38,5 +38,5 @@ public interface CommunicationService {
      * @param accessToken accessToken
      */
 
-    void updatePassword(String phone, String code, String password, String accessToken);
+    String updatePassword(String phone, String code, String password, String accessToken);
 }

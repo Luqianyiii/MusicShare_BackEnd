@@ -1,6 +1,7 @@
 package com.hahaha.musicshare.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hahaha.musicshare.common.cache.RequestContext;
 import com.hahaha.musicshare.convert.CommentConvert;
 import com.hahaha.musicshare.mapper.CommentMapper;
 import com.hahaha.musicshare.model.dto.CommentDTO;
@@ -30,8 +31,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentVO> getCommentByUserId(Integer user_id) {
-        return baseMapper.getByUserId(user_id);
+    public List<CommentVO> getCommentByUserId() {
+        return baseMapper.getByUserId(RequestContext.getUserId());
     }
 
     @Override

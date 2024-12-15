@@ -7,9 +7,15 @@ import com.hahaha.musicshare.model.dto.FanDTO;
 import com.hahaha.musicshare.model.entity.Fan;
 import com.hahaha.musicshare.model.vo.FanVO;
 import com.hahaha.musicshare.service.FanService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
+@Service
+@AllArgsConstructor
 public class FanServiceImpl extends ServiceImpl<FanMapper, Fan> implements FanService {
     @Override
     public void addFan(FanDTO fanDTO) {
