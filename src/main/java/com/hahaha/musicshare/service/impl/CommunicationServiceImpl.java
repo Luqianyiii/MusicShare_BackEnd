@@ -122,7 +122,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
     public void bindPhone(String phone, String code, String accessToken) {
         UserLoginVO userLogin = validateUpdate(phone, code, accessToken);
         // 判断新⼿机号是否存在⽤户
-        if (ObjectUtils.isNotEmpty(phone)) {
+        if (ObjectUtils.isNotEmpty(baseMapper.getByPhone(phone))) {
             // 存在⽤户，并且不是当前⽤户，抛出异常
             if (!userLogin.getId().equals(baseMapper.getByPhone(phone).getId())) {
                 throw new ServerException(ErrorCode.PHONE_IS_EXIST);
@@ -219,16 +219,12 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
             throw new ServerException(ErrorCode.PARAMS_ERROR);
         }
         // 获取⼿机验证码，校验验证码正确性
-        String redisCode = redisCache.get(RedisKeys.getSmsKey(phone)).toString
-                ();
+        String redisCode = redisCache.get(RedisKeys.getSmsKey(phone)).toString();
         if (ObjectUtils.isEmpty(redisCode) || !redisCode.equals(code)) {
             throw new ServerException(ErrorCode.SMS_CODE_ERROR);
         }
         // 删除验证码缓存
         redisCache.delete(RedisKeys.getSmsKey(phone));
-        // 获取当前⽤户信息
-        User userByPhone = baseMapper.getByPhone(phone);
-        // 获取当前登录的⽤户信息
         return tokenStoreCache.getUser(accessToken);
     }
 }

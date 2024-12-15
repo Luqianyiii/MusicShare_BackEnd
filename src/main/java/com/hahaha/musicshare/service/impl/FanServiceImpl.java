@@ -20,7 +20,6 @@ public class FanServiceImpl extends ServiceImpl<FanMapper, Fan> implements FanSe
 
     @Override
     public void deleteFan(Integer fans_id) {
-//        TODO
         baseMapper.deleteById(fans_id);
     }
 
