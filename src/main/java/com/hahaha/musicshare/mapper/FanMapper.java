@@ -7,6 +7,7 @@ import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.FanVO;
 
 import java.util.List;
+import java.util.Locale;
 
 public interface FanMapper extends MPJBaseMapper<Fan> {
     MPJLambdaWrapper<Fan> wrapper = new MPJLambdaWrapper<>();
@@ -17,15 +18,23 @@ public interface FanMapper extends MPJBaseMapper<Fan> {
                 .leftJoin(User.class, User::getId,Fan::getFan_id)
                 .select(User::getAvatar,User::getNickname,User::getGender,User::getMotto)
                 .eq(Fan::getFan_id, fanId);
-    return this.selectJoinList(FanVO.class, wrapper);
+        return this.selectJoinList(FanVO.class, wrapper);
     }
 
 //    查粉丝
-    default List<FanVO> getFan(Integer followedId) {
+    default List<FanVO> getFans(Integer followedId) {
         wrapper.selectAll(Fan.class)
                 .leftJoin(User.class, User::getId,Fan::getFollowed_id)
                 .select(User::getAvatar,User::getNickname,User::getGender,User::getMotto)
                 .eq(Fan::getFollowed_id, followedId);
         return this.selectJoinList(FanVO.class, wrapper);
-        }
+    }
+
+    default Long getFansCount(Integer followedId) {
+        return this.selectCount(wrapper.eq(Fan::getFollowed_id, followedId));
+    }
+
+    default Long getFollowedCount(Integer fanId) {
+        return this.selectCount(wrapper.eq(Fan::getFan_id, fanId));
+    }
 }

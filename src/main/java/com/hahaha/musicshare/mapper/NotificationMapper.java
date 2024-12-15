@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hahaha.musicshare.model.entity.Notification;
 
-public interface NotificationMapper extends BaseMapper<Notification> {
-    default Notification getById(Integer id) {
-        return this.selectOne(new LambdaQueryWrapper<Notification>().eq(Notification::getId, id));
-    }
+import java.util.List;
 
-    default Notification getByUserId(Integer userId) {
-        return this.selectOne(new LambdaQueryWrapper<Notification>().eq(Notification::getRecipient_id, userId));
+public interface NotificationMapper extends BaseMapper<Notification> {
+
+    default List<Notification> getByUserId(Integer userId) {
+        return this.selectList(new LambdaQueryWrapper<Notification>().eq(Notification::getRecipient_id, userId));
     }
 }

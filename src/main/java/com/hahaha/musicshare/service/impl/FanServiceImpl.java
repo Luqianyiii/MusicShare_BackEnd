@@ -21,7 +21,6 @@ public class FanServiceImpl extends ServiceImpl<FanMapper, Fan> implements FanSe
     @Override
     public void addFan(FanDTO fanDTO) {
         Fan fan = FanConvert.INSTANCE.convert(fanDTO);
-//        TODO 向被关注者发送一条通知
         baseMapper.insert(fan);
     }
 
@@ -32,12 +31,22 @@ public class FanServiceImpl extends ServiceImpl<FanMapper, Fan> implements FanSe
 
     @Override
     public List<FanVO> getFans() {
-        return baseMapper.getFan(RequestContext.getUserId());
+        return baseMapper.getFans(RequestContext.getUserId());
     }
 
     @Override
     public List<FanVO> getFollowed() {
         return baseMapper.getFollowed(RequestContext.getUserId());
+    }
+
+    @Override
+    public Long getFansCount() {
+        return baseMapper.getFansCount(RequestContext.getUserId());
+    }
+
+    @Override
+    public Long getFollowedCount() {
+        return baseMapper.getFollowedCount(RequestContext.getUserId());
     }
 }
 

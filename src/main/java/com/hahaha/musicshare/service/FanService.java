@@ -21,5 +21,9 @@ public interface FanService extends IService<Fan> {
     //获取关注列表
     List<FanVO> getFollowed();
 
+    Long getFansCount();
+
+    Long getFollowedCount();
+
 
 }

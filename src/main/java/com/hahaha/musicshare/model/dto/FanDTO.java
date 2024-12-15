@@ -1,7 +1,9 @@
 package com.hahaha.musicshare.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
+@Data
 public class FanDTO {
 
     @Schema(description = "粉丝ID")
