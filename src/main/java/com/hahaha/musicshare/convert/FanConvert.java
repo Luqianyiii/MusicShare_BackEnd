@@ -9,7 +9,5 @@ public interface FanConvert {
 
     FanConvert INSTANCE = Mappers.getMapper(FanConvert.class);
 
-    FanVO convert(Fan fan);
-    Fan convert(FanVO fanVO);
     Fan convert(FanDTO fanDTO);
 }

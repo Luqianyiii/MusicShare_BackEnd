@@ -1,15 +1,31 @@
 package com.hahaha.musicshare.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.yulichang.base.MPJBaseMapper;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hahaha.musicshare.model.entity.Fan;
+import com.hahaha.musicshare.model.entity.User;
+import com.hahaha.musicshare.model.vo.FanVO;
 
-public interface FanMapper extends BaseMapper<Fan> {
+import java.util.List;
 
-    default Fan getByUserId(Integer userId) {
-        return this.selectOne(new LambdaQueryWrapper<Fan>().eq(Fan::getFollowed_id, userId));
+public interface FanMapper extends MPJBaseMapper<Fan> {
+    MPJLambdaWrapper<Fan> wrapper = new MPJLambdaWrapper<>();
+
+//    查关注的人
+    default List<FanVO> getFollowed(Integer fanId) {
+        wrapper.selectAll(Fan.class)
+                .leftJoin(User.class, User::getId,Fan::getFan_id)
+                .select(User::getAvatar,User::getNickname,User::getGender,User::getMotto)
+                .eq(Fan::getFan_id, fanId);
+    return this.selectJoinList(FanVO.class, wrapper);
     }
-    default Fan getByFanId(Integer fanId) {
-        return this.selectOne(new LambdaQueryWrapper<Fan>().eq(Fan::getFan_id, fanId));
-    }
+
+//    查粉丝
+    default List<FanVO> getFan(Integer followedId) {
+        wrapper.selectAll(Fan.class)
+                .leftJoin(User.class, User::getId,Fan::getFollowed_id)
+                .select(User::getAvatar,User::getNickname,User::getGender,User::getMotto)
+                .eq(Fan::getFollowed_id, followedId);
+        return this.selectJoinList(FanVO.class, wrapper);
+        }
 }

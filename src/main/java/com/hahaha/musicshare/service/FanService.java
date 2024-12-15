@@ -16,10 +16,10 @@ public interface FanService extends IService<Fan> {
     void deleteFan(Integer fans_id);
 
     //获取粉丝列表
-    List<FanVO> getFans(Integer user_id);
+    List<FanVO> getFans();
     
     //获取关注列表
-    List<FanVO> getFollowed(Integer user_id);
+    List<FanVO> getFollowed();
 
 
 }

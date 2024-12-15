@@ -1,6 +1,7 @@
 package com.hahaha.musicshare.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hahaha.musicshare.common.cache.RequestContext;
 import com.hahaha.musicshare.convert.FanConvert;
 import com.hahaha.musicshare.mapper.FanMapper;
 import com.hahaha.musicshare.model.dto.FanDTO;
@@ -30,13 +31,13 @@ public class FanServiceImpl extends ServiceImpl<FanMapper, Fan> implements FanSe
     }
 
     @Override
-    public List<FanVO> getFans(Integer user_id) {
-        return List.of();
+    public List<FanVO> getFans() {
+        return baseMapper.getFan(RequestContext.getUserId());
     }
 
     @Override
-    public List<FanVO> getFollowed(Integer user_id) {
-        return List.of();
+    public List<FanVO> getFollowed() {
+        return baseMapper.getFollowed(RequestContext.getUserId());
     }
 }
 

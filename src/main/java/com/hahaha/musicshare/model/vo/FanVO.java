@@ -18,6 +18,9 @@ public class FanVO implements Serializable {
     @Schema(description = "粉丝ID")
     private Integer fan_id;
 
+    @Schema(description = "被关注者ID")
+    private Integer followed_id;
+
     @Schema(description = "头像")
     private String avatar;
 
