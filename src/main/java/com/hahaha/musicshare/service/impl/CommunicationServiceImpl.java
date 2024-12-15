@@ -18,7 +18,6 @@ import com.hahaha.musicshare.mapper.UserMapper;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.UserLoginVO;
 import com.hahaha.musicshare.service.CommunicationService;
-import com.hahaha.musicshare.service.UserService;
 import com.hahaha.musicshare.utils.CommonUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

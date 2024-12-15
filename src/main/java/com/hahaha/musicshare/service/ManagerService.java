@@ -3,7 +3,6 @@ package com.hahaha.musicshare.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
-import com.hahaha.musicshare.model.vo.UserLoginVO;
 
 import java.util.List;
 

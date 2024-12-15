@@ -7,7 +7,6 @@ import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.FanVO;
 
 import java.util.List;
-import java.util.Locale;
 
 public interface FanMapper extends MPJBaseMapper<Fan> {
     MPJLambdaWrapper<Fan> wrapper = new MPJLambdaWrapper<>();

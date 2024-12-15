@@ -1,11 +1,13 @@
 package com.hahaha.musicshare.controller;
 
+import com.hahaha.musicshare.common.cache.RequestContext;
 import com.hahaha.musicshare.common.result.Result;
 import com.hahaha.musicshare.model.dto.FanDTO;
 import com.hahaha.musicshare.model.dto.UserEditDTO;
 import com.hahaha.musicshare.model.entity.Notification;
 import com.hahaha.musicshare.model.vo.CommentVO;
 import com.hahaha.musicshare.model.vo.FanVO;
+import com.hahaha.musicshare.model.vo.FavoritesVO;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
 import com.hahaha.musicshare.service.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @Slf4j
@@ -27,6 +30,7 @@ public class UserController {
     private final CommentService commentService;
     private final FanService fanService;
     private final NotificationService notificationService;
+    private final FavoritesService favoritesService;
 
     @PostMapping("/info")
     @Operation(summary = "获取⽤户信息")
@@ -73,7 +77,7 @@ public class UserController {
 
     @PostMapping(value = "/AddFan")
     @Operation(summary = "添加粉丝信息")
-    public Result<String> AddFan(@RequestBody FanDTO fanDTO) {
+    public Result<String> addFan(@RequestBody FanDTO fanDTO) {
         fanService.addFan(fanDTO);
         notificationService.addNotification(fanDTO.getFollowed_id(),"您有新的粉丝!");
         return Result.ok();
@@ -81,20 +85,20 @@ public class UserController {
 
     @PostMapping(value = "/DeleteFan")
     @Operation(summary = "删除粉丝信息")
-    public Result<String> DeleteFan(@RequestParam("id") Integer id) {
+    public Result<String> deleteFan(@RequestParam("id") Integer id) {
         fanService.deleteFan(id);
         return Result.ok();
     }
 
     @PostMapping(value = "/CountFan")
     @Operation(summary = "获取粉丝数")
-    public Result<String> CountFan() {
+    public Result<String> countFan() {
         return Result.ok(fanService.getFansCount().toString());
     }
 
     @PostMapping(value = "/CountFollowed")
     @Operation(summary = "获取关注数")
-    public Result<String> CountFollowed() {
+    public Result<String> countFollowed() {
         return Result.ok(fanService.getFollowedCount().toString());
     }
 
@@ -104,10 +108,30 @@ public class UserController {
         return Result.ok(notificationService.getNotificationByUserId());
     }
 
- @PostMapping(value = "/DeleteNotification")
+    @PostMapping(value = "/DeleteNotification")
     @Operation(summary = "删除通知")
-    public Result<String> DeleteNotification(@RequestParam("id") Integer id) {
-     notificationService.deleteNotificationById(id);
+    public Result<String> deleteNotification(@RequestParam("id") Integer id) {
+        notificationService.deleteNotificationById(id);
         return Result.ok();
- }
+    }
+
+    @PostMapping(value = "/Favorites")
+    @Operation(summary = "获取收藏")
+    public Result<List<FavoritesVO>> getFavorites() {
+        return Result.ok(favoritesService.getFavorites());
+    }
+
+    @PostMapping(value = "/AddFavorites")
+    @Operation(summary = "添加收藏")
+    public Result<String> addFavorites(@RequestParam("music_id") Integer music_id) {
+        favoritesService.addFavorites(music_id);
+        return Result.ok();
+    }
+
+    @PostMapping(value = "/DeleteFavorites")
+    @Operation(summary = "删除收藏")
+    public Result<String> deleteFavorites(@RequestParam("id") Integer id) {
+        favoritesService.deleteFavorites(id);
+        return Result.ok();
+    }
 }
