@@ -6,6 +6,9 @@ import com.hahaha.musicshare.model.vo.UserInfoVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mapper
 public interface UserConvert {
 
@@ -17,5 +20,14 @@ public interface UserConvert {
 
     //将 User 对象转换为 UserInfoVO 对象
     UserInfoVO convert(User user);
+
+    default List<UserInfoVO> convert(List<User> users) {
+        List<UserInfoVO> res = new ArrayList<>();
+        for (User user : users) {
+            UserInfoVO temp = convert(user);
+            res.add(temp);
+        }
+        return res;
+    }
 
 }

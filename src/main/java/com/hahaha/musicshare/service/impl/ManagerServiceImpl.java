@@ -17,16 +17,16 @@ import java.util.List;
 public class ManagerServiceImpl extends ServiceImpl<UserMapper, User> implements ManagerService {
     @Override
     public List<UserInfoVO> getAllUser() {
-        return List.of();
+        return baseMapper.getUsers();
     }
 
     @Override
     public void deleteUser(Integer user_id) {
-
+        baseMapper.deleteById(user_id);
     }
 
     @Override
-    public List<UserInfoVO> getUserByKeyword() {
-        return List.of();
+    public List<UserInfoVO> getUserByKeyword(String keyword) {
+        return baseMapper.SearchUsers(keyword);
     }
 }

@@ -1,14 +1,10 @@
 package com.hahaha.musicshare.controller;
 
-import com.hahaha.musicshare.common.cache.RequestContext;
 import com.hahaha.musicshare.common.result.Result;
 import com.hahaha.musicshare.model.dto.FanDTO;
 import com.hahaha.musicshare.model.dto.UserEditDTO;
 import com.hahaha.musicshare.model.entity.Notification;
-import com.hahaha.musicshare.model.vo.CommentVO;
-import com.hahaha.musicshare.model.vo.FanVO;
-import com.hahaha.musicshare.model.vo.FavoritesVO;
-import com.hahaha.musicshare.model.vo.UserInfoVO;
+import com.hahaha.musicshare.model.vo.*;
 import com.hahaha.musicshare.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,7 +27,7 @@ public class UserController {
     private final FanService fanService;
     private final NotificationService notificationService;
     private final FavoritesService favoritesService;
-
+    private final MusicService musicService;
     @PostMapping("/info")
     @Operation(summary = "获取⽤户信息")
     public Result<UserInfoVO> getInfo(){
@@ -134,4 +130,36 @@ public class UserController {
         favoritesService.deleteFavorites(id);
         return Result.ok();
     }
+
+    @PostMapping(value = "/GetHostMusic")
+    @Operation(summary = "获取热门音乐")
+    public Result<List<MusicVO>> getHostMusic(@RequestParam("number") Integer num) {
+        return Result.ok(musicService.getHostMusic(num));
+    }
+
+    @PostMapping(value = "/GetLatestMusic")
+    @Operation(summary = "获取最新作品")
+    public Result<List<MusicVO>> getLatestMusic() {
+        return Result.ok(musicService.getLatestMusic());
+    }
+
+    @PostMapping(value = "/GetMyWorks")
+    @Operation(summary = "获取个人作品")
+    public Result<List<MusicVO>> getMyWorks() {
+        return Result.ok(musicService.getMusicByAuthorId());
+    }
+
+    @PostMapping(value = "/SearchMusic")
+    @Operation(summary = "用户模糊搜索")
+    public Result<List<MusicVO>> SearchMusic(@RequestParam("keyword") String keyword) {
+        return Result.ok(musicService.getMusicByKeyword(keyword));
+    }
+
+    @PostMapping(value = "/UpdateMusic")
+    @Operation(summary = "更新作品状态")
+    public Result<String> updateMusic(@RequestParam("music_id") Integer music_id, @RequestParam("status") String status) {
+        musicService.updateMusicStatus(music_id, status);
+        return Result.ok();
+    }
+
 }

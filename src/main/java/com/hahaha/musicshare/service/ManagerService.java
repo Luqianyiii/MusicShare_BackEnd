@@ -15,5 +15,5 @@ public interface ManagerService extends IService<User> {
     void deleteUser(Integer user_id);
 
     //根据关键词搜索用户
-    List<UserInfoVO> getUserByKeyword();
+    List<UserInfoVO> getUserByKeyword(String keyword);
 }
