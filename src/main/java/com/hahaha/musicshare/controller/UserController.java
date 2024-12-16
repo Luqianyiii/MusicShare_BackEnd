@@ -58,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/Comment")
-    @Operation(summary = "获取通知")
+    @Operation(summary = "获取评论")
     public Result<List<CommentVO>> getComment() {
         return Result.ok(commentService.getCommentByUserId());
     }
