@@ -6,9 +6,14 @@ import com.hahaha.musicshare.model.dto.MusicDTO;
 import com.hahaha.musicshare.model.entity.Music;
 import com.hahaha.musicshare.model.vo.MusicVO;
 import com.hahaha.musicshare.service.MusicService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Slf4j
+@Service
+@AllArgsConstructor
 public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements MusicService {
     @Override
     public List<MusicVO> getBestMusic() {
@@ -21,7 +26,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
     }
 
     @Override
-    public List<MusicVO> getMusicByUserId(Integer user_id) {
+    public List<MusicVO> getMusicByUserId() {
         return List.of();
     }
 

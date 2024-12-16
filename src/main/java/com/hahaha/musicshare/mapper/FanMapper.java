@@ -15,7 +15,7 @@ public interface FanMapper extends MPJBaseMapper<Fan> {
         MPJLambdaWrapper<Fan> wrapper = new MPJLambdaWrapper<>();
         wrapper.select(Fan::getId, Fan::getFan_id, Fan::getFollowed_id)  // 精确选择字段
                 .select(User::getAvatar, User::getNickname, User::getGender, User::getMotto)
-                .leftJoin(User.class, User::getId, Fan::getFan_id)  // 定义联表条件
+                .leftJoin(User.class, User::getId, Fan::getFollowed_id)  // 定义联表条件
                 .eq(Fan::getFan_id, fanId);  // 添加条件
         return this.selectJoinList(FanVO.class, wrapper);
     }
@@ -25,7 +25,7 @@ public interface FanMapper extends MPJBaseMapper<Fan> {
         MPJLambdaWrapper<Fan> wrapper = new MPJLambdaWrapper<>();
         wrapper.select(Fan::getId, Fan::getFan_id, Fan::getFollowed_id)
                 .select(User::getAvatar, User::getNickname, User::getGender, User::getMotto)
-                .leftJoin(User.class, User::getId, Fan::getFollowed_id)
+                .leftJoin(User.class, User::getId, Fan::getFan_id)
                 .eq(Fan::getFollowed_id, followedId);
         System.out.println(wrapper.getSqlSegment());
         return this.selectJoinList(FanVO.class, wrapper);

@@ -16,7 +16,7 @@ public interface MusicService extends IService<Music> {
     List<MusicVO> getLatestMusic();
 
     //根据用户id获取音乐
-    List<MusicVO> getMusicByUserId(Integer user_id);
+    List<MusicVO> getMusicByUserId();
 
     //用户根据关键词搜索音乐
     List<MusicVO> getMusicByKeyword(String keyword);
