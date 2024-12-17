@@ -6,9 +6,9 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hahaha.musicshare.convert.UserConvert;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.UserInfoVO;
+import org.mapstruct.Mapper;
 
 import java.util.List;
-
 public interface UserMapper extends MPJBaseMapper<User> {
     default User getByPhone(String phone) {
         return this.selectOne(new LambdaQueryWrapper<User>().eq(User::getPhone, phone));

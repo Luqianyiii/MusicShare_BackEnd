@@ -9,7 +9,6 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface MusicMapper extends MPJBaseMapper<Music> {
 
     //模糊搜索,多表联查

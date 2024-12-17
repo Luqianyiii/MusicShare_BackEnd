@@ -5,9 +5,9 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hahaha.musicshare.model.entity.Fan;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.FanVO;
+import org.mapstruct.Mapper;
 
 import java.util.List;
-
 public interface FanMapper extends MPJBaseMapper<Fan> {
 
     // 查关注的人
@@ -32,14 +32,14 @@ public interface FanMapper extends MPJBaseMapper<Fan> {
     }
 
     // 粉丝数量
-    default Long getFansCount(Integer followedId) {
+    default long getFansCount(Integer followedId) {
         MPJLambdaWrapper<Fan> wrapper = new MPJLambdaWrapper<>();
         wrapper.eq(Fan::getFollowed_id, followedId);
         return this.selectCount(wrapper);
     }
 
     // 关注数量
-    default Long getFollowedCount(Integer fanId) {
+    default long getFollowedCount(Integer fanId) {
         MPJLambdaWrapper<Fan> wrapper = new MPJLambdaWrapper<>();
         wrapper.eq(Fan::getFan_id, fanId);
         return this.selectCount(wrapper);
