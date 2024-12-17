@@ -5,7 +5,6 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hahaha.musicshare.model.entity.Fan;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.FanVO;
-import org.mapstruct.Mapper;
 
 import java.util.List;
 public interface FanMapper extends MPJBaseMapper<Fan> {

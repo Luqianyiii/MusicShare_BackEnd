@@ -6,7 +6,6 @@ import com.hahaha.musicshare.model.entity.Favorites;
 import com.hahaha.musicshare.model.entity.Music;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.FavoritesVO;
-import org.mapstruct.Mapper;
 
 import java.util.List;
 public interface FavoritesMapper extends MPJBaseMapper<Favorites> {

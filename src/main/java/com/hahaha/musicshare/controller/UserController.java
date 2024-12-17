@@ -28,15 +28,16 @@ public class UserController {
     private final NotificationService notificationService;
     private final FavoritesService favoritesService;
     private final MusicService musicService;
+
     @PostMapping("/info")
     @Operation(summary = "获取⽤户信息")
-    public Result<UserInfoVO> getInfo(){
+    public Result<UserInfoVO> getInfo() {
         return Result.ok(userService.userInfo());
     }
 
     @PostMapping("/update")
     @Operation(summary = "修改⽤户信息")
-    public Result<UserInfoVO> update(@RequestBody UserEditDTO userEditDTO){
+    public Result<UserInfoVO> update(@RequestBody UserEditDTO userEditDTO) {
         return Result.ok(userService.updateInfo(userEditDTO));
     }
 
@@ -48,8 +49,8 @@ public class UserController {
 
     @PostMapping(value = "/changePassword")
     @Operation(summary = "更改密码")
-    public Result<String> changePassword(@RequestParam("phone") String phone,@RequestParam("code") String code,
-                          @RequestParam("password") String password,@RequestHeader("Authorization") String accessToken) {
+    public Result<String> changePassword(@RequestParam("phone") String phone, @RequestParam("code") String code,
+                                         @RequestParam("password") String password, @RequestHeader("Authorization") String accessToken) {
         return Result.ok(communicationService.updatePassword(phone, code, password, accessToken));
     }
 
@@ -75,7 +76,7 @@ public class UserController {
     @Operation(summary = "添加粉丝信息")
     public Result<String> addFan(@RequestBody FanDTO fanDTO) {
         fanService.addFan(fanDTO);
-        notificationService.addNotification(fanDTO.getFollowed_id(),"您有新的粉丝!");
+        notificationService.addNotification(fanDTO.getFollowed_id(), "您有新的粉丝!");
         return Result.ok();
     }
 
@@ -162,4 +163,12 @@ public class UserController {
         return Result.ok();
     }
 
+    @PostMapping(value = "/UploadMusic")
+    @Operation(summary = "上传作品")
+    public Result<String> uploadMusic(@RequestBody MultipartFile cover, @RequestBody MultipartFile music,
+                                      @RequestParam("name") String name, @RequestParam("description") String description,
+                                      @RequestParam("keywords") String keywords) {
+        musicService.shareMusic(cover, music, name, description, keywords);
+        return Result.ok();
+    }
 }

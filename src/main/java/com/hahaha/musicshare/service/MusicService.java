@@ -1,9 +1,9 @@
 package com.hahaha.musicshare.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.hahaha.musicshare.model.dto.MusicDTO;
 import com.hahaha.musicshare.model.entity.Music;
 import com.hahaha.musicshare.model.vo.MusicVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public interface MusicService extends IService<Music> {
     List<MusicVO> getMusicNeedAudit();
 
     //上传音乐信息到云端
-    void shareMusic(MusicDTO musicDTO);
+    void shareMusic(MultipartFile cover, MultipartFile music, String song_name, String description, String keywords);
 
     //更新音乐状态
     void updateMusicStatus(Integer music_id, String status);

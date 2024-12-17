@@ -154,7 +154,7 @@ public class CommunicationServiceImpl extends ServiceImpl<UserMapper, User> impl
         }
         if (!isLegal) {
             // 如果图⽚格式不合法
-            throw new ServerException("图⽚格式不正确");
+            throw new ServerException("图⽚格式不支持");
         }
         // 获取⽂件原名称
         String originalFilename = file.getOriginalFilename();

@@ -6,7 +6,6 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hahaha.musicshare.model.entity.Comment;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.CommentVO;
-import org.mapstruct.Mapper;
 
 import java.util.List;
 public interface CommentMapper extends MPJBaseMapper<Comment> {
