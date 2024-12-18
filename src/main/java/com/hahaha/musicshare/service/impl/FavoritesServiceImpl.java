@@ -33,4 +33,9 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
     public List<FavoritesVO> getFavorites() {
         return baseMapper.getByLoverId(RequestContext.getUserId());
     }
+
+    @Override
+    public boolean isFavorite(Integer music_id) {
+        return baseMapper.isFavorite(music_id, RequestContext.getUserId());
+    }
 }

@@ -16,4 +16,6 @@ public interface FavoritesService extends IService<Favorites> {
 
     //获取收藏列表
     List<FavoritesVO> getFavorites();
+
+    boolean isFavorite(Integer music_id);
 }

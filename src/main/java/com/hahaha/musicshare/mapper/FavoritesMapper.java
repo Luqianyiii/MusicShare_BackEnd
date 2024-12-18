@@ -20,4 +20,9 @@ public interface FavoritesMapper extends MPJBaseMapper<Favorites> {
         return this.selectJoinList(FavoritesVO.class, wrapper);
 
     }
+    default boolean isFavorite(Integer music_id,Integer lover_id) {
+        return this.selectCount(new MPJLambdaWrapper<Favorites>()
+                .eq(Favorites::getMusic_id,music_id)
+                .eq(Favorites::getLover_id,lover_id)) > 0;
+    }
 }

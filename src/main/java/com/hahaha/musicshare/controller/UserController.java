@@ -213,4 +213,10 @@ public class UserController {
         commentService.dislikes(id);
         return Result.ok();
     }
+
+    @PostMapping(value = "/IsFavorite")
+    @Operation(summary = "判断是否收藏")
+    public Result<Boolean> isFavorite(@RequestParam("id") Integer id) {
+        return Result.ok(favoritesService.isFavorite(id));
+    }
 }
