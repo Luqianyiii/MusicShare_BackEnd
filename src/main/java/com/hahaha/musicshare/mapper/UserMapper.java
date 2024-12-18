@@ -10,11 +10,11 @@ import com.hahaha.musicshare.model.vo.UserInfoVO;
 import java.util.List;
 public interface UserMapper extends MPJBaseMapper<User> {
     default User getByPhone(String phone) {
-        return this.selectOne(new LambdaQueryWrapper<User>().eq(User::getPhone, phone));
+        return this.selectOne(new LambdaQueryWrapper<User>(User.class).eq(User::getPhone, phone));
     }
 
     default List<UserInfoVO> getUsers() {
-        MPJLambdaWrapper<User> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<User> wrapper = new MPJLambdaWrapper<>(User.class);
         wrapper.selectAll()
                 .eq(User::getRemark, "user");
         return UserConvert.INSTANCE.convert(this.selectList(wrapper));
@@ -22,7 +22,7 @@ public interface UserMapper extends MPJBaseMapper<User> {
 
     //模糊搜索
     default List<UserInfoVO> SearchUsers(String keyword) {
-        MPJLambdaWrapper<User> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<User> wrapper = new MPJLambdaWrapper<>(User.class);
         wrapper.selectAll()
                 .eq(User::getRemark, "user")
                 .like(User::getPhone, keyword)

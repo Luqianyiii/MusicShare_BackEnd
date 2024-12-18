@@ -24,7 +24,7 @@ public interface CommentMapper extends MPJBaseMapper<Comment> {
 
 //    联查评论者信息
     private static MPJLambdaWrapper<Comment> AfterJoin() {
-        MPJLambdaWrapper<Comment> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Comment> wrapper = new MPJLambdaWrapper<>(Comment.class);
         wrapper.selectAll(Comment.class)
                 .leftJoin(User.class, User::getId, Comment::getCommenter_id)
                 .select(User::getNickname,User::getAvatar);

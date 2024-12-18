@@ -25,21 +25,21 @@ public interface MusicMapper extends MPJBaseMapper<Music> {
 
     //用户模糊搜索
     default List<MusicVO> searchMusicFromUser(String keyword) {
-        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>(Music.class);
         SearchMusic(keyword, wrapper).eq(Music::getStatus, "上线中");
         return this.selectJoinList(MusicVO.class, wrapper);
     }
 
     //管理员模糊搜索
     default List<MusicVO> searchMusicFromAdmin(String keyword) {
-        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>(Music.class);
         SearchMusic(keyword, wrapper);
         return this.selectJoinList(MusicVO.class, wrapper);
     }
 
     //需审核
     default List<MusicVO> MusicForAdmin() {
-        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>(Music.class);
         wrapper.selectAll()
                 .eq(Music::getStatus, "待审核")
                 .leftJoin(User.class, User::getId, Music::getAuthor_id)
@@ -61,7 +61,7 @@ public interface MusicMapper extends MPJBaseMapper<Music> {
 
     //约定数量,获取最新发布
     default List<MusicVO> Latest() {
-        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>(Music.class);
         wrapper.selectAll()
                 .eq(Music::getStatus, "上线中")
                 .leftJoin(User.class, User::getId, Music::getAuthor_id)
@@ -73,7 +73,7 @@ public interface MusicMapper extends MPJBaseMapper<Music> {
 
     //获取个人作品
     default List<MusicVO> myWorks(Integer author_id) {
-        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>(Music.class);
         wrapper.selectAll()
                 .eq(Music::getAuthor_id, author_id)
                 .leftJoin(User.class, User::getId, Music::getAuthor_id)

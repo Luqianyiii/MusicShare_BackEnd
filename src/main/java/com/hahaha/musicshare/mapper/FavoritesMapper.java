@@ -10,7 +10,7 @@ import com.hahaha.musicshare.model.vo.FavoritesVO;
 import java.util.List;
 public interface FavoritesMapper extends MPJBaseMapper<Favorites> {
     default List<FavoritesVO> getByLoverId(Integer lover_id) {
-        MPJLambdaWrapper<Favorites> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Favorites> wrapper = new MPJLambdaWrapper<>(Favorites.class);
         wrapper.eq(Favorites::getLover_id, lover_id)
                .leftJoin(Music.class,Music::getId, Favorites::getMusic_id)
                .select(Music::getSong_name,Music::getDescription,Music::getCover,
@@ -21,7 +21,7 @@ public interface FavoritesMapper extends MPJBaseMapper<Favorites> {
 
     }
     default boolean isFavorite(Integer music_id,Integer lover_id) {
-        return this.selectCount(new MPJLambdaWrapper<Favorites>()
+        return this.selectCount(new MPJLambdaWrapper<Favorites>(Favorites.class)
                 .eq(Favorites::getMusic_id,music_id)
                 .eq(Favorites::getLover_id,lover_id)) > 0;
     }
