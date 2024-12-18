@@ -1,6 +1,7 @@
 package com.hahaha.musicshare.controller;
 
 import com.hahaha.musicshare.common.result.Result;
+import com.hahaha.musicshare.model.dto.CommentDTO;
 import com.hahaha.musicshare.model.dto.FanDTO;
 import com.hahaha.musicshare.model.dto.UserEditDTO;
 import com.hahaha.musicshare.model.entity.Notification;
@@ -169,6 +170,47 @@ public class UserController {
                                       @RequestParam("name") String name, @RequestParam("description") String description,
                                       @RequestParam("keywords") String keywords) {
         musicService.shareMusic(cover, music, name, description, keywords);
+        return Result.ok();
+    }
+
+    @PostMapping(value = "/Click")
+    @Operation(summary = "作品被点击")
+    public Result<String> clickMusic(@RequestParam("music_id") Integer music_id) {
+        musicService.clickMusic(music_id);
+        return Result.ok();
+    }
+
+    @PostMapping(value = "/AddComment")
+    @Operation(summary = "添加评论")
+    public Result<String> addComment(@RequestBody CommentDTO commentDTO) {
+        commentService.addComment(commentDTO);
+        return Result.ok();
+    }
+
+    @PostMapping(value = "/DeleteComment")
+    @Operation(summary = "删除评论")
+    public Result<String> deleteComment(@RequestParam("id") Integer id) {
+        commentService.deleteComment(id);
+        return Result.ok();
+    }
+
+    @PostMapping(value = "/MusicComment")
+    @Operation(summary = "获取作品评论")
+    public Result<List<CommentVO>> SearchMusic(@RequestParam("id") Integer id) {
+        return Result.ok(commentService.getCommentByMusicId(id));
+    }
+
+    @PostMapping(value = "/LikesComment")
+    @Operation(summary = "点赞评论")
+    public Result<String> likesComment(@RequestParam("id") Integer id) {
+        commentService.likes(id);
+        return Result.ok();
+    }
+
+    @PostMapping(value = "/DislikesComment")
+    @Operation(summary = "取消点赞评论")
+    public Result<String> dislikesComment(@RequestParam("id") Integer id) {
+        commentService.dislikes(id);
         return Result.ok();
     }
 }

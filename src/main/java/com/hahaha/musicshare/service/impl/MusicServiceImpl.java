@@ -114,6 +114,12 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
         }
     }
 
+    @Override
+    public void clickMusic(Integer music_id) {
+        Music music = baseMapper.selectById(music_id);
+        music.setClicks(music.getClicks() + 1);
+    }
+
     private String uploadFile(MultipartFile file, String type) {
         // 获取⽂件原名称
         String originalFilename = file.getOriginalFilename();

@@ -10,7 +10,7 @@ import java.util.List;
 public interface CommentService extends IService<Comment> {
 
     //添加评论
-    CommentVO addComment(CommentDTO comment);
+    void addComment(CommentDTO comment);
 
     //删除评论
     void deleteComment(Integer comment_id);
@@ -25,6 +25,6 @@ public interface CommentService extends IService<Comment> {
     void likes(Integer comment_id);
 
     //取消点赞评论
-    void unlikes(Integer comment_id);
+    void dislikes(Integer comment_id);
 
 }

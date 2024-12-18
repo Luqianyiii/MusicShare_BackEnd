@@ -19,11 +19,10 @@ import java.util.List;
 @AllArgsConstructor
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Override
-    public CommentVO addComment(CommentDTO commentDTO) {
+    public void addComment(CommentDTO commentDTO) {
         Comment comment = CommentConvert.INSTANCE.convert(commentDTO);
         CommentVO commentVO = CommentConvert.INSTANCE.convertTOVO(commentDTO);
         commentVO.setId(baseMapper.insert(comment));
-        return commentVO;
     }
 
     @Override
@@ -49,7 +48,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public void unlikes(Integer comment_id) {
+    public void dislikes(Integer comment_id) {
         Comment comment = baseMapper.selectById(comment_id);
         comment.setLikes_count(comment.getLikes_count() - 1);
         baseMapper.updateById(comment);
