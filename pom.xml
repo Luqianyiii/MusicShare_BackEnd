@@ -28,6 +28,12 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-extension</artifactId>
+			<version>3.5.6</version>
+		</dependency>
+
 		<!-- 热更新依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

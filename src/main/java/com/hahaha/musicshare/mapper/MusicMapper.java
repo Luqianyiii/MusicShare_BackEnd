@@ -49,7 +49,7 @@ public interface MusicMapper extends MPJBaseMapper<Music> {
 
     //限制数量,按点击量排序
     default List<MusicVO> Host(Integer num) {
-        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>();
+        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>(Music.class);
         wrapper.selectAll()
                 .eq(Music::getStatus, "上线中")
                 .leftJoin(User.class, User::getId, Music::getAuthor_id)
