@@ -21,7 +21,7 @@ public class MusicVO implements Serializable {
     @Schema(description = "作者ID")
     private Integer author_id;
 
-    @Schema(description = "作着昵称")
+    @Schema(description = "作者昵称")
     private String author_name;
 
     @Schema(description = "描述")
