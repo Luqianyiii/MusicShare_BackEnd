@@ -225,4 +225,10 @@ public class UserController {
     public Result<List<MusicVO>> getFollowedWorks(@RequestParam("id") Integer id) {
         return Result.ok(musicService.getMusicByAuthorId(id));
     }
+
+    @PostMapping(value = "/GetAllFollowedWorks")
+    @Operation(summary = "获取所有关注的人的作品")
+    public Result<List<MusicVO>> getAllFollowedWorks() {
+        return Result.ok(musicService.getAllFollowedMusic());
+    }
 }

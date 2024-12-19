@@ -35,7 +35,12 @@ public interface MusicService extends IService<Music> {
     //更新音乐状态
     void updateMusicStatus(Integer music_id, String status);
 
+    //用户点击音乐
     void clickMusic(Integer music_id);
 
+    //管理员删除音乐
     void deleteMusic(Integer music_id);
+
+    //获取用户所有关注的人的音乐
+    List<MusicVO> getAllFollowedMusic();
 }

@@ -2,6 +2,7 @@ package com.hahaha.musicshare.mapper;
 
 import com.github.yulichang.base.MPJBaseMapper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import com.hahaha.musicshare.model.entity.Fan;
 import com.hahaha.musicshare.model.entity.Music;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.MusicVO;
@@ -79,6 +80,17 @@ public interface MusicMapper extends MPJBaseMapper<Music> {
                 .leftJoin(User.class, User::getId, Music::getAuthor_id)
                 .selectAs(User::getNickname, "author_name")
                 .orderByDesc(Music::getId);
+        return this.selectJoinList(MusicVO.class, wrapper);
+    }
+
+    //获取所有关注的人的作品
+    default List<MusicVO> myFollowedWorks(Integer user_id) {
+        MPJLambdaWrapper<Music> wrapper = new MPJLambdaWrapper<>(Music.class);
+        wrapper.selectAll()
+                .leftJoin(Fan.class, Fan::getFollowed_id, Music::getAuthor_id)
+                .eq(Fan::getFan_id, user_id)
+                .leftJoin(User.class, User::getId, Music::getAuthor_id)
+                .selectAs(User::getNickname, "author_name");
         return this.selectJoinList(MusicVO.class, wrapper);
     }
 }

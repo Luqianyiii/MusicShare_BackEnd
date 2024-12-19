@@ -130,6 +130,11 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
         baseMapper.deleteById(music_id);
     }
 
+    @Override
+    public List<MusicVO> getAllFollowedMusic() {
+        return baseMapper.myFollowedWorks(RequestContext.getUserId());
+    }
+
     private String uploadFile(MultipartFile file, String type) {
         // 获取⽂件原名称
         String originalFilename = file.getOriginalFilename();
