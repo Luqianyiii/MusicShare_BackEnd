@@ -13,19 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class CommunicationController {
     private final CommunicationService communicationService;
-    @PostMapping("/sendSms")
+
+    @RequestMapping(value = "/sendSms", method = {RequestMethod.POST, RequestMethod.GET})
     @Operation(summary = "发送短信")
     public Result<Object> sendSms(@RequestParam("phone") String phone) {
         communicationService.sendSms(phone);
         return Result.ok();
     }
 
-
-//    后⾯换绑⼿机号：需要先⽤旧的⼿机号登录，得到 token，然后给新的⼿机号发送验证码，使
-//    ⽤新的⼿机号和第⼆次的验证码，携带请求头进⾏⼿机号的换绑
-
-    @PostMapping("/changePhone")
-    @Operation(summary = "换绑⼿机号")
+    @RequestMapping(value = "/changePhone", method = {RequestMethod.POST, RequestMethod.PUT})
+    @Operation(summary = "换绑手机号")
     public Result<String> bindPhone(
             @RequestParam("phone") String phone,
             @RequestParam("code") String code,
@@ -33,5 +30,4 @@ public class CommunicationController {
     {
         return Result.ok(communicationService.bindPhone(phone, code, accessToken));
     }
-
 }
