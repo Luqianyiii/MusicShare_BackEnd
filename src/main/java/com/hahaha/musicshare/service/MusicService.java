@@ -18,6 +18,8 @@ public interface MusicService extends IService<Music> {
     //根据作者id获取音乐
     List<MusicVO> getMusicByAuthorId();
 
+    List<MusicVO> getMusicByAuthorId(Integer id);
+
     //用户根据关键词搜索音乐
     List<MusicVO> getMusicByKeyword(String keyword);
 
@@ -34,4 +36,6 @@ public interface MusicService extends IService<Music> {
     void updateMusicStatus(Integer music_id, String status);
 
     void clickMusic(Integer music_id);
+
+    void deleteMusic(Integer music_id);
 }

@@ -219,4 +219,10 @@ public class UserController {
     public Result<Boolean> isFavorite(@RequestParam("id") Integer id) {
         return Result.ok(favoritesService.isFavorite(id));
     }
+
+    @PostMapping(value = "/GetFollowedWorks")
+    @Operation(summary = "获取关注作品")
+    public Result<List<MusicVO>> getFollowedWorks(@RequestParam("id") Integer id) {
+        return Result.ok(musicService.getMusicByAuthorId(id));
+    }
 }

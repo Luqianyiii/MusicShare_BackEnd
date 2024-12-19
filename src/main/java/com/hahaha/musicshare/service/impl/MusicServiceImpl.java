@@ -54,6 +54,11 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
     }
 
     @Override
+    public List<MusicVO> getMusicByAuthorId(Integer id) {
+        return baseMapper.myWorks(id);
+    }
+
+    @Override
     public List<MusicVO> getMusicByKeyword(String keyword) {
         return baseMapper.searchMusicFromUser(keyword);
     }
@@ -107,7 +112,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 
     @Override
     public void updateMusicStatus(Integer music_id, String status) {
-        Music music = new Music();
+        Music music = baseMapper.selectById(music_id);
         music.setStatus(status);
         if (baseMapper.updateById(music) < 1) {
             throw new ServerException(ErrorCode.OPERATION_FAIL);
@@ -118,6 +123,11 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
     public void clickMusic(Integer music_id) {
         Music music = baseMapper.selectById(music_id);
         music.setClicks(music.getClicks() + 1);
+    }
+
+    @Override
+    public void deleteMusic(Integer music_id) {
+        baseMapper.deleteById(music_id);
     }
 
     private String uploadFile(MultipartFile file, String type) {

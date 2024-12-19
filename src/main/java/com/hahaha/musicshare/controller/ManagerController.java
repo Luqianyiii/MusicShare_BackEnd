@@ -62,4 +62,11 @@ public class ManagerController {
         musicService.updateMusicStatus(music_id, status);
         return Result.ok();
     }
+
+    @PostMapping(value = "/DeleteMusic")
+    @Operation(summary = "删除音乐")
+    public Result<String> deleteMusic(@RequestParam("id") Integer id) {
+        musicService.deleteMusic(id);
+        return Result.ok();
+    }
 }
