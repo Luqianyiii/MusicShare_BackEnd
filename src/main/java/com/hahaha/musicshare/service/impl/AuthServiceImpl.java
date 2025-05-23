@@ -12,6 +12,7 @@ import com.hahaha.musicshare.mapper.UserMapper;
 import com.hahaha.musicshare.model.entity.User;
 import com.hahaha.musicshare.model.vo.UserLoginVO;
 import com.hahaha.musicshare.service.AuthService;
+import com.hahaha.musicshare.utils.AIAssistantUtils;
 import com.hahaha.musicshare.utils.JwtUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,8 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
         if (ObjectUtils.isEmpty(user)) {
             log.info("⽤户不存在，创建⽤户, phone: {}", phone);
             user = new User();
-            user.setNickname(phone);
+//         调用千问大模型，生成随机用户名
+            user.setNickname(AIAssistantUtils.createName());
             user.setPhone(phone);
             user.setRemark("user");
             baseMapper.insert(user);
